@@ -1,0 +1,97 @@
+{% extends 'base.html'%}
+{% load static%}
+{%block title%}
+     {{post.title}}
+{%endblock%}
+
+
+{%block content%}
+
+<div>
+    <div>
+        <h1>{{post.title}}</h1>
+        <small> posted by 
+            {{post.author.first_name}}-
+            {{post.author.last_name}}-
+            {{post.category}}-
+            {{post.date_post}}
+            <br>
+            <hr>
+            {%if post.header_imag%}
+            <small><img src="{{post.header_imag.url}}"></small><br>
+            {%endif%}
+            {{post.body|safe}}    
+        </small>
+
+        <hr>
+        <form action="{% url 'like-post' post.pk %}"
+                method="POST">
+                {% csrf_token %}
+                {% if liked%}
+                <button type="submit" name="post_id" value="{{ post.id }}" 
+                class="btn btn-danger btn-sm">unlike</button>
+                
+                {%else%}
+                <button type="submit" name="post_id" value="{{ post.id }}" 
+                class="btn btn-primary btn-sm">like</button>
+                {%endif%}
+                
+                {{ total_likes }} -
+                likes
+
+        </form>
+        <h3>coments</h3>
+        {% if not post.coments%}
+          no coment yet <a href="{% url 'add-coment' post.pk%}">add one</a>
+        {%else%}
+          {% for coment in post.coments%}
+                <strong>
+                    {{coments.name}} -
+                    {{coments.date_added}}
+                </strong>
+                <br>
+                {{coment.body}}
+                <a href="{% url 'add-coment' post.pk%}">add coment</a>
+          {%endfor%}
+        {%endif%}
+        <br>
+
+       
+    </div>
+</div>
+
+<div class="card mb-3">
+    <div class="row g-0">
+      <div class="col-md-2">
+        {% if post.author.profil.profil_pic %}
+          <img src="{{post.author.profil.profil_pic.url}}" class="img-fluid rounded-start" >
+        {%else%}
+          <img src="{% static 'blog/imgs/defult_image.png' %}" class="img-fluid rounded-start" >
+        {%endif%}
+      </div>
+      <div class="col-md-10">
+        <div class="card-body">
+          <h5 class="card-title"><a href="{%url 'user-page' post.author.profil.id%}">
+                {{post.author.first_name}}-
+                {{post.author.last_name}}-</a></h5>
+          <p class="card-text">{{post.author.profil.bio}}</p>
+          <p class="card-text"><small class="text-muted">
+                {%if post.author.profil.facebook_url%}
+              | <a href="{{post.author.profil.facebook_url}}">facebook</a>
+                {%endif%}
+
+                {%if post.author.profil.instagram_url%}
+              | <a href="{{post.author.profil.instagram_url}}">instagram</a>
+                {%endif%}
+
+                {%if post.author.profil.website_url%}
+              | <a href="{{post.author.profil.website_url}}">website</a>
+                {%endif%}
+
+          </small></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <a href="{% url 'home'%}" class="btn btn-secondary">back</a>
+{%endblock%}

@@ -1,0 +1,24 @@
+{%extends 'base.html'%}
+{%block title%}edit post{%endblock%}
+
+
+{%block content%}
+
+  
+
+<h1>update post</h1>
+<hr>
+<br><br>
+<div class="form-group">
+
+    <form method="post">
+        {% csrf_token%}
+        {{form.media}}
+        {{form.as_p}}
+        <button class="btn btn-secondary">update</button>
+
+    
+</div>
+
+
+{%endblock%}

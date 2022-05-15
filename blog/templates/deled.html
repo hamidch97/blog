@@ -1,0 +1,30 @@
+{%extends 'base.html'%}
+{%block title%}delete post{%endblock%}
+
+
+{%block content%}
+
+  
+
+<h1>delete post</h1>
+<hr>
+<br><br>
+<h1>{{post.title}}</h1>
+<br><br>
+<h6>are you sue?</h6>
+
+<div class="form-group">
+
+    <form method="post">
+        {% csrf_token%}
+        {%if user.id == post.author.id%}
+
+            <button class="btn btn-secondary">delete</button>
+            
+            
+            <a href="{%url 'home' %}" class="btn btn-secondary">back</a>
+        {%endif%}
+</div>
+
+
+{%endblock%}

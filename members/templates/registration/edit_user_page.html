@@ -1,0 +1,32 @@
+{%extends 'base.html'%}
+{%block title%}edit user profile{%endblock%}
+
+{%block content%}
+
+  
+
+<h1>edit user profile</h1>
+
+<hr>
+<br><br>
+{%if user.is_authenticated%}
+    {%if user.id == profil.user.id %}
+        <div class="form-group">
+
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token%}
+                {{form.as_p}}
+                
+                <button class="btn btn-secondary">update profil</button>
+        </div>
+    {%else%} 
+        you are not the correct user!!!
+    {%endif%}
+    
+{%else%}
+            <h1>you are not allowed here <br>you have to registrate</h1>
+
+    
+{%endif%}
+
+{%endblock%}

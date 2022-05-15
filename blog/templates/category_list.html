@@ -1,0 +1,21 @@
+{% extends 'base.html'%}
+
+    <h1>categories list</h1>
+
+{%block content%}
+{%for item in cat_list%}
+    <h4>
+        <a class="dropdown-item" href="{%url 'category-list' item%}">{{item}}</a>
+    </h4>
+{%endfor%}
+
+
+
+
+
+
+
+<br><br><br>
+<a href="{% url 'home'%}" class="btn btn-secondary">back</a>
+
+{%endblock%}
